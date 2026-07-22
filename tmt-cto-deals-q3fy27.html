@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMT CTO Deals — Q3 FY27</title>
+<style>
+:root {
+  --surface-1: #fcfcfb;
+  --surface-2: #f4f4f2;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --series-1: #2a78d6;
+  --series-2: #1baf7a;
+  --seq-250: #86b6ef;
+  --seq-450: #2a78d6;
+  --seq-550: #1c5cab;
+  --status-good: #0a6e3f;
+  --border: rgba(11,11,11,0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #ededeb;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.page {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.report-header {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 28px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.report-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.report-subtitle { color: var(--text-secondary); font-size: 13px; margin-top: 4px; }
+.report-meta { text-align: right; color: var(--text-muted); font-size: 12px; line-height: 2; white-space: nowrap; }
+
+/* KPIs */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.kpi {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px 16px;
+}
+.kpi-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+.kpi-value { font-size: 30px; font-weight: 700; margin-top: 5px; letter-spacing: -1px; line-height: 1; }
+.kpi-sub { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+.kpi-blue .kpi-value { color: var(--series-1); }
+.kpi-green .kpi-value { color: var(--series-2); }
+
+/* Chart grid */
+.chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chart-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px 22px;
+}
+.chart-card.full { grid-column: 1 / -1; }
+.chart-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 18px; }
+
+/* Bar chart */
+.bar-chart { display: flex; flex-direction: column; gap: 9px; }
+.bar-row { display: flex; align-items: center; gap: 10px; }
+.bar-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  width: 148px; min-width: 148px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-label.wide { width: 200px; min-width: 200px; }
+.bar-track {
+  flex: 1; height: 18px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--series-1);
+}
+.bar-fill.muted { background: var(--axis); }
+.bar-fill.stage-02 { background: var(--seq-250); }
+.bar-fill.stage-03 { background: var(--seq-450); }
+.bar-fill.stage-04 { background: #1baf7a; }
+.bar-value {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  min-width: 56px;
+}
+
+/* Stage legend for stage chart */
+.stage-legend { display: flex; gap: 20px; margin-top: 14px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
+
+/* Table */
+.table-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.table-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--grid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.table-title { font-size: 13px; font-weight: 600; }
+.table-hint { font-size: 12px; color: var(--text-muted); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--surface-2);
+  padding: 9px 13px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--grid);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+thead th:hover { color: var(--text-secondary); }
+thead th.sorted { color: var(--series-1); }
+.sort-icon { font-size: 9px; opacity: 0.6; }
+
+tbody tr { border-bottom: 1px solid var(--grid); transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #f7f6f5; }
+td { padding: 10px 13px; vertical-align: middle; }
+
+.td-account { font-weight: 500; max-width: 160px; }
+.td-opp { color: var(--text-secondary); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.td-amount { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.td-date { white-space: nowrap; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.td-person { color: var(--text-secondary); white-space: nowrap; }
+.td-norvp { color: var(--text-muted); }
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.badge-02 { background: #e8f2fd; color: #1c5cab; }
+.badge-03 { background: #eef4fe; color: #2a78d6; }
+.badge-04 { background: #e6f5ef; color: #0a6644; }
+
+.pill {
+  display: inline-block;
+  padding: 1px 7px; border-radius: 100px;
+  font-size: 11px; font-weight: 500;
+}
+.pill-1 { background: #e8f1fc; color: var(--series-1); }
+.pill-2 { background: #e3f5ef; color: #0f7a50; }
+
+@media (max-width: 860px) {
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .chart-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="report-header">
+    <div>
+      <div class="report-title">TMT CTO Deals &mdash; Q3 FY27</div>
+      <div class="report-subtitle">AMER TMT-1 &amp; TMT-2 &nbsp;·&nbsp; Close dates Aug 1 – Oct 31, 2026 &nbsp;·&nbsp; Services &amp; Services-Locked &nbsp;·&nbsp; Gross Bookings</div>
+    </div>
+    <div class="report-meta">
+      <div>Generated Jul 22, 2026</div>
+      <div>Source: org62</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Total Pipeline</div>
+      <div class="kpi-value">$13.1M</div>
+      <div class="kpi-sub">17 deals</div>
+    </div>
+    <div class="kpi kpi-blue">
+      <div class="kpi-label">AMER TMT-1</div>
+      <div class="kpi-value">$5.7M</div>
+      <div class="kpi-sub">6 deals</div>
+    </div>
+    <div class="kpi kpi-green">
+      <div class="kpi-label">AMER TMT-2</div>
+      <div class="kpi-value">$7.5M</div>
+      <div class="kpi-sub">11 deals</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Active Negotiation</div>
+      <div class="kpi-value">$1.4M</div>
+      <div class="kpi-sub">2 deals · closes in Aug</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="chart-title">Pipeline by AE</div>
+      <div class="bar-chart" id="chart-ae"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Pipeline by RVP</div>
+      <div class="bar-chart" id="chart-rvp"></div>
+    </div>
+    <div class="chart-card full">
+      <div class="chart-title">Pipeline by Stage</div>
+      <div class="bar-chart" id="chart-stage"></div>
+      <div class="stage-legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--seq-250)"></div> 02 – Scoping</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--seq-450)"></div> 03 – Initial Proposal</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:#1baf7a"></div> 04 – Active Negotiation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deal table -->
+  <div class="table-card">
+    <div class="table-header">
+      <div class="table-title">All CTO Deals</div>
+      <div class="table-hint">17 opportunities &nbsp;·&nbsp; Click headers to sort</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="deal-table">
+        <thead>
+          <tr>
+            <th onclick="sort('account')">Account <span class="sort-icon">↕</span></th>
+            <th onclick="sort('name')">Opportunity <span class="sort-icon">↕</span></th>
+            <th onclick="sort('close')">Close Date <span class="sort-icon">↕</span></th>
+            <th onclick="sort('stage')">Stage <span class="sort-icon">↕</span></th>
+            <th onclick="sort('amount')" style="text-align:right">Amount <span class="sort-icon">↕</span></th>
+            <th onclick="sort('ae')">AE <span class="sort-icon">↕</span></th>
+            <th onclick="sort('rvp')">RVP <span class="sort-icon">↕</span></th>
+            <th onclick="sort('subregion')">Sub-region <span class="sort-icon">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<script>
+const fmt = v => '$' + (v >= 1e6 ? (v/1e6).toFixed(2).replace(/\.?0+$/,'')+'M' : (v/1e3).toFixed(0)+'K');
+const fmtFull = v => '$' + v.toLocaleString('en-US');
+const fmtDate = s => new Date(s+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+const deals = [
+  {account:'Amazon Web Services (AWS)', name:'Amazon AWS MCP CTO - CSG', close:'2026-09-04', stage:'02', amount:650000, ae:'Stacia Butwin', rvp:'Dana Drummond', sub:'AMER TMT - 1'},
+  {account:'NWN Corporation', name:'MS - NWN - MuleSoft CTO for M&A - SVCS', close:'2026-09-11', stage:'02', amount:572832, ae:'Bob Stilwell', rvp:'John Maratea', sub:'AMER TMT - 1'},
+  {account:'Broadridge Financial Solutions', name:'MS - Broadridge Mulesoft CTO - CSG SVCs', close:'2026-09-18', stage:'02', amount:572832, ae:'Bob Stilwell', rvp:'Darren Nicholas', sub:'AMER TMT - 1'},
+  {account:'ESRI', name:'MS - ESRI - Mule CTO - SVCS', close:'2026-09-18', stage:'02', amount:572832, ae:'Bob Stilwell', rvp:'Alison Price', sub:'AMER TMT - 1'},
+  {account:'Vishay Intertechnology', name:'MS - Vishay - Mule CTO - SVCS', close:'2026-10-30', stage:'03', amount:572832, ae:'Bob Stilwell', rvp:'Darren Nicholas', sub:'AMER TMT - 1'},
+  {account:'OpenAI OpCo, LLC', name:'Open AI - CTOs & FDEs', close:'2026-10-30', stage:'03', amount:2740000, ae:'Tammy Kasdorf', rvp:'Gabriella Siler', sub:'AMER TMT - 1'},
+  {account:'Intuit Inc.', name:'Intuit - CTO Renewal - CSG', close:'2026-08-11', stage:'04', amount:572832, ae:'Shelby Seip', rvp:'', sub:'AMER TMT - 2'},
+  {account:'Siemens Aktiengesellschaft', name:'Siemens - CTOs Architecture Board FY27 (50%)', close:'2026-08-14', stage:'03', amount:419520, ae:'Brent Winterton', rvp:'', sub:'AMER TMT - 2'},
+  {account:'Konica Minolta', name:'Konica CTO + Addl Resource Extension - CSG', close:'2026-08-20', stage:'04', amount:858000, ae:'Shelby Seip', rvp:'Al Drucker', sub:'AMER TMT - 2'},
+  {account:'Equinix (Main)', name:'Equinix CTO Yr 2 CSG', close:'2026-08-28', stage:'03', amount:572832, ae:'Shelby Seip', rvp:'Alexandra Lersch', sub:'AMER TMT - 2'},
+  {account:'Datasite LLC', name:'Datasite CTO for RCA/RCB Transformation', close:'2026-09-11', stage:'02', amount:572832, ae:'Shelby Seip', rvp:'Bill Meidell', sub:'AMER TMT - 2'},
+  {account:'Snap Inc.', name:'Snap - MC Specs - CTO - CSG', close:'2026-09-22', stage:'02', amount:572832, ae:'Shelby Seip', rvp:'Andrew Napper', sub:'AMER TMT - 2'},
+  {account:'Siemens SieOps', name:'Siemens - SieOps - Agentforce Factory', close:'2026-09-25', stage:'02', amount:300000, ae:'Shelby Seip', rvp:'Al Drucker', sub:'AMER TMT - 2'},
+  {account:'Google Fiber Inc.', name:'Google Fiber CTO C/O', close:'2026-09-25', stage:'03', amount:722592, ae:'Shelby Seip', rvp:'Alexandra Lersch', sub:'AMER TMT - 2'},
+  {account:'NBCUniversal Media', name:'NBCUniversal - AOV Retention Extension CTOs', close:'2026-10-23', stage:'02', amount:1146000, ae:'Isabel Napper', rvp:'Maggie Hargis', sub:'AMER TMT - 2'},
+  {account:'Pinterest, Inc.', name:'Pinterest - CTO - CSG', close:'2026-10-23', stage:'02', amount:572832, ae:'Erika Schiller', rvp:'Andrew Napper', sub:'AMER TMT - 2'},
+  {account:'NVIDIA Corporation', name:'NVIDIA - 2 CTOs (AELA) - CSG', close:'2026-10-29', stage:'03', amount:1145664, ae:'Alex Lee', rvp:'', sub:'AMER TMT - 2'},
+];
+
+// Sort state
+let sortKey = 'close', sortDir = 1;
+const colIndex = {account:0,name:1,close:2,stage:3,amount:4,ae:5,rvp:6,subregion:7};
+
+function sort(key) {
+  sortDir = (sortKey === key) ? sortDir * -1 : 1;
+  sortKey = key;
+  render();
+  document.querySelectorAll('thead th').forEach((th,i) => {
+    th.classList.toggle('sorted', i === colIndex[key]);
+  });
+}
+
+function stageBadge(s) {
+  if (s === '02') return '<span class="badge badge-02">Scoping</span>';
+  if (s === '03') return '<span class="badge badge-03">Initial Proposal</span>';
+  return '<span class="badge badge-04">Active Negotiation</span>';
+}
+
+function render() {
+  const rows = [...deals].sort((a,b) => {
+    const av = a[sortKey === 'subregion' ? 'sub' : sortKey];
+    const bv = b[sortKey === 'subregion' ? 'sub' : sortKey];
+    if (sortKey === 'amount') return (av - bv) * sortDir;
+    return String(av).localeCompare(String(bv)) * sortDir;
+  });
+
+  document.getElementById('tbody').innerHTML = rows.map(d => `
+    <tr>
+      <td class="td-account">${d.account}</td>
+      <td class="td-opp" title="${d.name}">${d.name}</td>
+      <td class="td-date">${fmtDate(d.close)}</td>
+      <td>${stageBadge(d.stage)}</td>
+      <td class="td-amount">${fmtFull(d.amount)}</td>
+      <td class="td-person">${d.ae}</td>
+      <td class="${d.rvp ? 'td-person' : 'td-norvp'}">${d.rvp || '—'}</td>
+      <td><span class="pill ${d.sub.includes('1') ? 'pill-1' : 'pill-2'}">${d.sub.includes('1') ? 'TMT-1' : 'TMT-2'}</span></td>
+    </tr>`).join('');
+}
+
+function buildBars(id, items, classFn, wide) {
+  const max = Math.max(...items.map(x => x.v));
+  document.getElementById(id).innerHTML = items.map(x => `
+    <div class="bar-row" title="${x.l}: ${fmtFull(x.v)}">
+      <div class="bar-label${wide ? ' wide' : ''}" title="${x.l}">${x.l}</div>
+      <div class="bar-track">
+        <div class="bar-fill ${classFn ? classFn(x) : ''}" style="width:${(x.v/max*100).toFixed(1)}%"></div>
+      </div>
+      <div class="bar-value">${fmt(x.v)}</div>
+    </div>`).join('');
+}
+
+// Aggregate helpers
+function agg(key) {
+  return Object.values(deals.reduce((m, d) => {
+    const k = d[key] || '(no RVP)';
+    m[k] = m[k] || {l:k, v:0};
+    m[k].v += d.amount;
+    return m;
+  }, {})).sort((a,b) => b.v - a.v);
+}
+
+// AE chart
+buildBars('chart-ae', agg('ae'), null, false);
+
+// RVP chart — muted bar for no-RVP
+buildBars('chart-rvp', agg('rvp'), x => x.l === '(no RVP)' ? 'muted' : '', false);
+
+// Stage chart
+buildBars('chart-stage', [
+  {l:'02 — Scoping (9 deals)', v:5532992, cls:'stage-02'},
+  {l:'03 — Initial Proposal (6 deals)', v:6173440, cls:'stage-03'},
+  {l:'04 — Active Negotiation (2 deals)', v:1430832, cls:'stage-04'},
+], x => x.cls, true);
+
+// Initial table render (sorted by close date)
+render();
+document.querySelectorAll('thead th')[2].classList.add('sorted');
+</script>
+</body>
+</html>
