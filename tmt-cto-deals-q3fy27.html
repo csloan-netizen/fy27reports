@@ -188,6 +188,15 @@ td { padding: 10px 13px; vertical-align: middle; }
   .kpi-row { grid-template-columns: 1fr 1fr; }
   .chart-row { grid-template-columns: 1fr; }
 }
+.breadcrumb {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.breadcrumb a:hover { color: var(--series-1); }
 </style>
 </head>
 <body>
@@ -196,6 +205,7 @@ td { padding: 10px 13px; vertical-align: middle; }
   <!-- Header -->
   <div class="report-header">
     <div>
+      <div class="breadcrumb"><a href="index.html">← FY27 Reports</a></div>
       <div class="report-title">TMT CTO Deals &mdash; Q3 FY27</div>
       <div class="report-subtitle">AMER TMT-1 &amp; TMT-2 &nbsp;·&nbsp; Close dates Aug 1 – Oct 31, 2026 &nbsp;·&nbsp; Services &amp; Services-Locked &nbsp;·&nbsp; Gross Bookings</div>
     </div>
