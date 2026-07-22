@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMT AELA / SELA Deals — Q3 FY27</title>
+<style>
+:root {
+  --bg: #ededeb;
+  --surface-1: #fcfcfb;
+  --surface-2: #f4f3f1;
+  --border: rgba(11,11,11,0.09);
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --blue: #2a78d6;
+  --blue-bg: #e8f1fc;
+  --green: #1a7a4a;
+  --green-bg: #e3f4ec;
+  --amber: #a05c00;
+  --amber-bg: #fef3e2;
+  --purple: #6b3fa0;
+  --purple-bg: #f0eaf8;
+  --red: #c0392b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text-primary); font-family: system-ui,-apple-system,"Segoe UI",sans-serif; font-size: 14px; line-height: 1.5; }
+.page { max-width: 1280px; margin: 0 auto; padding: 32px 20px 64px; display: flex; flex-direction: column; gap: 16px; }
+
+/* Breadcrumb */
+.breadcrumb { font-size: 12px; color: var(--text-muted); }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text-primary); }
+.breadcrumb span { margin: 0 6px; }
+
+/* Header */
+.report-header { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 22px 28px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.report-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.report-subtitle { color: var(--text-secondary); font-size: 13px; margin-top: 4px; }
+.report-meta { text-align: right; color: var(--text-muted); font-size: 12px; line-height: 2; white-space: nowrap; }
+
+/* KPI tiles */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.kpi { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+.kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); }
+.kpi-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.kpi-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.kpi.blue .kpi-value { color: var(--blue); }
+.kpi.green .kpi-value { color: var(--green); }
+.kpi.amber .kpi-value { color: var(--amber); }
+.kpi.purple .kpi-value { color: var(--purple); }
+
+/* Section label */
+.section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-top: 4px; }
+
+/* Table card */
+.table-card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+
+/* Filters */
+.filter-bar { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.filter-bar label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+.filter-bar select, .filter-bar input { font-size: 12px; border: 1px solid var(--border); border-radius: 5px; padding: 5px 8px; background: var(--surface-2); color: var(--text-primary); outline: none; cursor: pointer; }
+.filter-bar select:focus, .filter-bar input:focus { border-color: var(--blue); }
+.filter-bar .spacer { flex: 1; }
+.result-count { font-size: 12px; color: var(--text-muted); }
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--surface-2); padding: 9px 12px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; }
+th:hover { color: var(--text-primary); }
+th .sort-icon { opacity: 0.4; margin-left: 4px; font-size: 10px; }
+th.sorted .sort-icon { opacity: 1; color: var(--blue); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--surface-2); }
+
+/* Badges */
+.badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+.badge-aela { background: var(--blue-bg); color: var(--blue); }
+.badge-sela { background: var(--purple-bg); color: var(--purple); }
+.badge-commit { background: var(--green-bg); color: var(--green); }
+.badge-bestcase { background: var(--amber-bg); color: var(--amber); }
+.badge-pipeline { background: #f0f0ee; color: var(--text-secondary); }
+.badge-omitted { background: #f0f0ee; color: #aaa; }
+
+/* Stage pill - compact */
+.stage-pill { font-size: 11px; color: var(--text-secondary); }
+
+/* Amount */
+.amount { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.amount-large { color: var(--blue); }
+
+/* Services opp link */
+.svc-link { font-size: 12px; color: var(--blue); text-decoration: none; }
+.svc-link:hover { text-decoration: underline; }
+.no-svc { color: var(--text-muted); font-size: 12px; }
+
+/* Opp link */
+.opp-name { font-weight: 500; }
+.opp-name a { color: var(--text-primary); text-decoration: none; }
+.opp-name a:hover { color: var(--blue); text-decoration: underline; }
+.acct-name { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Segment label */
+.seg { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+/* Owner */
+.owner-name { white-space: nowrap; }
+
+@media (max-width: 700px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="./index.html">← FY27 Reports</a>
+  </div>
+
+  <div class="report-header">
+    <div>
+      <div class="report-title">TMT AELA / SELA Deals — Q3 FY27</div>
+      <div class="report-subtitle">AMER TMT · Lenore Lang's org · Close Aug 1 – Oct 31, 2026 · License AE &amp; AP (Services) view</div>
+    </div>
+    <div class="report-meta">
+      33 opportunities<br>
+      Published Jul 22, 2026
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi blue">
+      <div class="kpi-label">Total Pipeline</div>
+      <div class="kpi-value">$40.5M</div>
+      <div class="kpi-sub">33 AELA/SELA opps</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Commit</div>
+      <div class="kpi-value">$2.5M</div>
+      <div class="kpi-sub">2 opportunities</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-label">Best Case</div>
+      <div class="kpi-value">$8.7M</div>
+      <div class="kpi-sub">7 opportunities</div>
+    </div>
+    <div class="kpi purple">
+      <div class="kpi-label">With Services Opp</div>
+      <div class="kpi-value">13</div>
+      <div class="kpi-sub">matched to a PS opp</div>
+    </div>
+  </div>
+
+  <div class="section-label">All Deals</div>
+
+  <div class="table-card">
+    <div class="filter-bar">
+      <label>Type</label>
+      <select id="f-type" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="AELA">AELA</option>
+        <option value="SELA">SELA</option>
+      </select>
+      <label>Forecast</label>
+      <select id="f-forecast" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="Commit">Commit</option>
+        <option value="Best Case">Best Case</option>
+        <option value="Pipeline">Pipeline</option>
+      </select>
+      <label>Month</label>
+      <select id="f-month" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="Aug">August</option>
+        <option value="Sep">September</option>
+        <option value="Oct">October</option>
+      </select>
+      <label>Has Services Opp</label>
+      <select id="f-svc" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <div class="spacer"></div>
+      <span class="result-count" id="result-count">33 deals</span>
+    </div>
+    <div class="table-wrap">
+      <table id="deals-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable(0)">Account / Opportunity <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(1)">Type <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(2)" class="sorted">Close Date <span class="sort-icon">↑</span></th>
+            <th onclick="sortTable(3)">Amount <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(4)">Stage <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(5)">Forecast <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(6)">Segment <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(7)">AE (License) <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(8)">Services Opportunity <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(9)">AP (Services) <span class="sort-icon">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+
+          <tr data-type="AELA" data-forecast="Best Case" data-month="Aug" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000arT5ZAAU" target="_blank">Broadway Direct - Velocity AELA (Data360 + MI)</a></div><div class="acct-name">Broadway Direct (MC)</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20260815">Aug 15</td>
+            <td data-sort="491000" class="amount amount-large">$491K</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Cmrcl MT NE</span></td>
+            <td class="owner-name">Daniel Kelly</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Commit" data-month="Aug" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000JgBwzAAF" target="_blank">WK - Financial (+15 Integration Users) (Off-Sela)</a></div><div class="acct-name">Wolters Kluwer Financial Services</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20260831">Aug 31</td>
+            <td data-sort="1800" class="amount">$1.8K</td>
+            <td><span class="stage-pill">06 - Finalizing</span></td>
+            <td><span class="badge badge-commit">Commit</span></td>
+            <td><span class="seg">Ent MTE SPRT</span></td>
+            <td class="owner-name">Grayson Bloskas</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Aug" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gIuMwAAK" target="_blank">Siemens Corporation — SELA add-on</a></div><div class="acct-name">Siemens Corporation</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20260831">Aug 31</td>
+            <td data-sort="9000" class="amount">$9K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent Tech E1 SE1</span></td>
+            <td class="owner-name">Allison Walker</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Sep" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000eU9V4AAK" target="_blank">CAI - Headless Flex/AELA</a></div><div class="acct-name">CAI</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20260922">Sep 22</td>
+            <td data-sort="50000" class="amount">$50K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Cmrcl Tech E GBE1</span></td>
+            <td class="owner-name">John DeMarco</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Sep" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000VQfFPAA1" target="_blank">AELA Versant</a></div><div class="acct-name">Versant Media, LLC</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20260925">Sep 25</td>
+            <td data-sort="2500000" class="amount amount-large">$2.5M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat MediaTelco S</span></td>
+            <td class="owner-name">Elysa Vreeland</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Sep" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000f0vrWAAQ" target="_blank">Postscript — AELA (headless 360)</a></div><div class="acct-name">Postscript.io</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20260930">Sep 30</td>
+            <td data-sort="90000" class="amount">$90K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Cmrcl Tech SW SLC</span></td>
+            <td class="owner-name">Spencer Maxfield</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Best Case" data-month="Sep" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000cPGTVAA4" target="_blank">Proofpoint - AELA #Q2PFFY27 #TopUseCase</a></div><div class="acct-name">Proofpoint, Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20260930">Sep 30</td>
+            <td data-sort="999000" class="amount amount-large">$999K</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Ent Tech W SF2</span></td>
+            <td class="owner-name">Erich Zuver</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000bMAmbAAG" target="_blank">Proofpoint - Agentic Services SOW - CSG</a></td>
+            <td class="owner-name">Alex Lee</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gihyjAAA" target="_blank">Zoom - AELA</a></div><div class="acct-name">Zoom Video Communications</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261023">Oct 23</td>
+            <td data-sort="2000000" class="amount amount-large">$2.0M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W1-02</span></td>
+            <td class="owner-name">Michael Lange</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000cu4HaAAI" target="_blank">iHeartMedia - AELA Upside Opportunity</a></div><div class="acct-name">iHeartMedia Management Services</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261023">Oct 23</td>
+            <td data-sort="400000" class="amount">$400K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent MTE SPRT</span></td>
+            <td class="owner-name">Elle Wilhelm</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000NISLaAAP" target="_blank">Cohesity - Agentforce for Sales - AELA</a></div><div class="acct-name">Cohesity</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261023">Oct 23</td>
+            <td data-sort="500000" class="amount">$500K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent Tech W SF2</span></td>
+            <td class="owner-name">Dane Lutes-Koths</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/0063y00001AcKtiAAF" target="_blank">Cohesity - Oracle CRM Migration - CSG</a></td>
+            <td class="owner-name">Alana Kaselitz</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gnFQkAAM" target="_blank">Fortinet, Inc. — AELA Expansion</a></div><div class="acct-name">Fortinet, Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261029">Oct 29</td>
+            <td data-sort="515000" class="amount">$515K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W1-02</span></td>
+            <td class="owner-name">Leah Lobrovich</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000VvJTtAAN" target="_blank">OpenAI SELA Oppty</a></div><div class="acct-name">OpenAI OpCo, LLC</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="4200000" class="amount amount-large">$4.2M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">Kyle Pfister</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000d8ZIHAA2" target="_blank">Open AI - CTOs &amp; FDEs ($2.74M)</a></td>
+            <td class="owner-name">Tammy Kasdorf</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Commit" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000LfTlAAAV" target="_blank">MC - OpenAI OpCo - MC Next SELA #MCDC</a></div><div class="acct-name">OpenAI OpCo, LLC</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="2531820" class="amount amount-large">$2.53M</td>
+            <td><span class="stage-pill">05 - Negotiating</span></td>
+            <td><span class="badge badge-commit">Commit</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">Kyle Pfister</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000d8ZIHAA2" target="_blank">Open AI - CTOs &amp; FDEs ($2.74M)</a></td>
+            <td class="owner-name">Tammy Kasdorf</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Best Case" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000e04xRAAQ" target="_blank">Fiserv - SELA Upside</a></div><div class="acct-name">Fiserv Solutions, LLC</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="995000" class="amount amount-large">$995K</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Ent Tech E1 SE1</span></td>
+            <td class="owner-name">Joshua DeBella</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000eb7Q6AAI" target="_blank">Fiserv Agentic Enterprise Pod ($640K)</a></td>
+            <td class="owner-name">Shelby Seip</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gnl5dAAA" target="_blank">Betfair Interactive US LLC - SELA Service Demand</a></div><div class="acct-name">Betfair Interactive US LLC</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="600000" class="amount">$600K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat MediaTelco W</span></td>
+            <td class="owner-name">Alexandra Kalbus</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000PEF41AAH" target="_blank">FanDuel - Canada Loyalty Program ($800K)</a></td>
+            <td class="owner-name">Michael Buckley</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000eW77OAAS" target="_blank">SpinCo/Flex SELA Demand</a></div><div class="acct-name">SpinCo (fka Flex International USA)</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="949200" class="amount">$949K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W1-02</span></td>
+            <td class="owner-name">Mark Glennon</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Best Case" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000QbjX6AAJ" target="_blank">Synopsys, Inc. - SELA Early Renewal/Restructure</a></div><div class="acct-name">Synopsys, Inc.</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="500000" class="amount">$500K</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">James Yukevich</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000PuJ1ZAAV" target="_blank">Synopsys - Ansys Org Merge - CSG ($233K)</a></td>
+            <td class="owner-name">Stacia Butwin</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000ebhi6AAA" target="_blank">Synopsys, Inc. - SELA Early Renewal/Restructure (Upside)</a></div><div class="acct-name">Synopsys, Inc.</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="425000" class="amount">$425K</td>
+            <td><span class="stage-pill">03 - Validating</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">James Yukevich</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000PuJ1ZAAV" target="_blank">Synopsys - Ansys Org Merge - CSG ($233K)</a></td>
+            <td class="owner-name">Stacia Butwin</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000cr9SHAAY" target="_blank">WK TAA EU - RCA - SELA add on EU roll out</a></div><div class="acct-name">CCH Incorporated</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="310000" class="amount">$310K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent MTE SPRT</span></td>
+            <td class="owner-name">Judd Bornheimer</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000d824cAAA" target="_blank">MSCI Inc. - AELA #FY27BB</a></div><div class="acct-name">MSCI Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="2310000" class="amount amount-large">$2.31M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat MediaTelco W</span></td>
+            <td class="owner-name">Sean Mitchell</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000WOMOMAA5" target="_blank">MSCI - CTO (AI &amp; Data Gov) - CSG ($573K)</a></td>
+            <td class="owner-name">Shelby Seip</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gm2SMAAY" target="_blank">NiCE CXone - Headless - AELA</a></div><div class="acct-name">NICE CXone</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="264000" class="amount">$264K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent Tech W SF3</span></td>
+            <td class="owner-name">Stephen Smith</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Best Case" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed000002gHjFAAU" target="_blank">Okta - Velocity AELA</a></div><div class="acct-name">Okta, Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="2250000" class="amount amount-large">$2.25M</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Strat Tech W2-02</span></td>
+            <td class="owner-name">Justin Castello</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Best Case" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000foGGXAA2" target="_blank">SPECS: Super Agent AELA</a></div><div class="acct-name">Snap Spectacles Org</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="2000000" class="amount amount-large">$2.0M</td>
+            <td><span class="stage-pill">04 - Confirming</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Strat MediaTelco W</span></td>
+            <td class="owner-name">Ryan Case</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000dR7GfAAK" target="_blank">Veeam Software Corporation + AELA</a></div><div class="acct-name">Veeam Software Corporation</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="1023002" class="amount amount-large">$1.02M</td>
+            <td><span class="stage-pill">03 - Validating</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent Tech E2 C2</span></td>
+            <td class="owner-name">Alex Froehlke</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000gguSFAAY" target="_blank">SpinCo/Flex SELA Demand (Upside)</a></div><div class="acct-name">SpinCo (fka Flex International USA)</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="2503200" class="amount amount-large">$2.5M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W1-02</span></td>
+            <td class="owner-name">Mark Glennon</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000eiETGAA2" target="_blank">Algolia — (+500) A1E, AELA, MCA, PC, Shield (Early Renewal)</a></div><div class="acct-name">Algolia, Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="440187" class="amount">$440K</td>
+            <td><span class="stage-pill">03 - Validating</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Cmrcl Tech NW PNW</span></td>
+            <td class="owner-name">Michael Madden</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000ecEHRAA2" target="_blank">Autodesk, Inc. +AELA Contract (Upside) #CDP</a></div><div class="acct-name">Autodesk, Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261030">Oct 30</td>
+            <td data-sort="500000" class="amount">$500K</td>
+            <td><span class="stage-pill">03 - Validating</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">Lydia Grendahl</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000bLMpqAAG" target="_blank">Autodesk - Svc Cloud SOW - CSG ($129K)</a></td>
+            <td class="owner-name">Stacia Butwin</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Best Case" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000g6a3pAAA" target="_blank">Thomson Reuters - FY27 Renewal Upside (PEM Upside, 3yr AELA)</a></div><div class="acct-name">Thomson Reuters Holdings Inc.</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="1500000" class="amount amount-large">$1.5M</td>
+            <td><span class="stage-pill">05 - Negotiating</span></td>
+            <td><span class="badge badge-bestcase">Best Case</span></td>
+            <td><span class="seg">Ent MTE SPRT</span></td>
+            <td class="owner-name">Richie Ellis</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000f3ghRAAQ" target="_blank">FDE - Thomson Reuters - Courtesy</a></td>
+            <td class="owner-name">JeNaye Johnson</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000VmQEVAA3" target="_blank">UKG - License Upgrade (SELA RUL), +Agentforce consumption</a></div><div class="acct-name">UKG Inc.</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="629486" class="amount">$629K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Ent Tech E1 NE1</span></td>
+            <td class="owner-name">Meredith Reid</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000bxZEAAA2" target="_blank">UKG - Agentforce Build AES - CSG ($1.6M)</a></td>
+            <td class="owner-name">Sarah Van Leeuwen</td>
+          </tr>
+
+          <tr data-type="SELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000MZhF8AAL" target="_blank">NVIDIA SELA Upside</a></div><div class="acct-name">NVIDIA Corporation</div></td>
+            <td><span class="badge badge-sela">SELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="5500000" class="amount amount-large">$5.5M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">KA - NVIDIA</span></td>
+            <td class="owner-name">Ryan Lowe</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000ggt4kAAA" target="_blank">NVIDIA - 2 CTOs (AELA) - CSG ($1.15M)</a></td>
+            <td class="owner-name">Alex Lee</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="yes">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000Q2AkJAAV" target="_blank">NVIDIA - AELA (H360, AF, D360)</a></div><div class="acct-name">NVIDIA Corporation</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="2000000" class="amount amount-large">$2.0M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">KA - NVIDIA</span></td>
+            <td class="owner-name">Jon Wheeler</td>
+            <td><a class="svc-link" href="https://org62.my.salesforce.com/006ed00000ggt4kAAA" target="_blank">NVIDIA - 2 CTOs (AELA) - CSG ($1.15M)</a></td>
+            <td class="owner-name">Alex Lee</td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000TlVndAAF" target="_blank">McAfee AELA Uncapped AF Voice</a></div><div class="acct-name">McAfee LLC</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="999999" class="amount amount-large">$1.0M</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Strat Tech W2-03</span></td>
+            <td class="owner-name">Brian Whitlock</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+          <tr data-type="AELA" data-forecast="Pipeline" data-month="Oct" data-svc="no">
+            <td><div class="opp-name"><a href="https://org62.my.salesforce.com/006ed00000f8nn7AAA" target="_blank">NinjaOne - Headless/Flex Credits/AELA</a></div><div class="acct-name">NinjaOne</div></td>
+            <td><span class="badge badge-aela">AELA</span></td>
+            <td data-sort="20261031">Oct 31</td>
+            <td data-sort="500000" class="amount">$500K</td>
+            <td><span class="stage-pill">02 - Determining</span></td>
+            <td><span class="badge badge-pipeline">Pipeline</span></td>
+            <td><span class="seg">Cmrcl Tech SW TX1</span></td>
+            <td class="owner-name">Seth Elliott</td>
+            <td><span class="no-svc">—</span></td>
+            <td><span class="no-svc">—</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let sortCol = 2, sortAsc = true;
+
+function applyFilters() {
+  const type = document.getElementById('f-type').value;
+  const forecast = document.getElementById('f-forecast').value;
+  const month = document.getElementById('f-month').value;
+  const svc = document.getElementById('f-svc').value;
+  const rows = document.querySelectorAll('#table-body tr');
+  let count = 0;
+  rows.forEach(r => {
+    const show = (!type || r.dataset.type === type)
+              && (!forecast || r.dataset.forecast === forecast)
+              && (!month || r.dataset.month === month)
+              && (!svc || r.dataset.svc === svc);
+    r.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('result-count').textContent = count + ' deal' + (count !== 1 ? 's' : '');
+}
+
+function sortTable(col) {
+  if (sortCol === col) { sortAsc = !sortAsc; } else { sortCol = col; sortAsc = true; }
+  const ths = document.querySelectorAll('th');
+  ths.forEach((th, i) => {
+    th.classList.toggle('sorted', i === col);
+    const icon = th.querySelector('.sort-icon');
+    if (icon) icon.textContent = (i === col) ? (sortAsc ? '↑' : '↓') : '↕';
+  });
+  const tbody = document.getElementById('table-body');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => {
+    const aCell = a.cells[col];
+    const bCell = b.cells[col];
+    const aVal = (aCell.dataset.sort !== undefined ? parseFloat(aCell.dataset.sort) : NaN);
+    const bVal = (bCell.dataset.sort !== undefined ? parseFloat(bCell.dataset.sort) : NaN);
+    if (!isNaN(aVal) && !isNaN(bVal)) return sortAsc ? aVal - bVal : bVal - aVal;
+    const aText = aCell.textContent.trim().toLowerCase();
+    const bText = bCell.textContent.trim().toLowerCase();
+    return sortAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
+</script>
+</body>
+</html>
