@@ -137,6 +137,47 @@ table.deal-table th { background: #eeecea; padding: 6px 14px; text-align: left; 
 .badge-pipeline { background: #f0f0ee; color: var(--text-secondary); }
 
 .no-deals { padding: 16px 20px; color: var(--text-muted); font-size: 12px; }
+
+/* ── Net vs Gross section ────────────────────────────────── */
+.ng-explainer {
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 18px; font-size: 12px; color: var(--text-secondary);
+  display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+}
+.ng-explainer span { padding: 2px 0; }
+.ng-sep { margin: 0 10px; color: var(--border); }
+.ng-section-header {
+  padding: 10px 18px; font-size: 12px; font-weight: 600; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border); background: var(--surface-2);
+}
+.ng-sub { font-weight: 400; color: var(--text-muted); margin-left: 6px; }
+table.ng-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.ng-table .ng-th {
+  background: var(--surface-2); padding: 8px 14px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--text-muted);
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.ng-th-r { text-align: right; }
+.ng-label { padding: 9px 14px; white-space: nowrap; }
+.ng-label.ap-col { font-size: 13px; }
+.ng-val { padding: 9px 14px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; white-space: nowrap; }
+.ng-pct { padding: 9px 14px; text-align: right; font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.ng-qval { padding: 9px 14px; text-align: right; font-variant-numeric: tabular-nums; font-size: 12px; color: var(--text-secondary); white-space: nowrap; }
+.ng-qval.empty { color: var(--text-muted); }
+table.ng-table tr { border-bottom: 1px solid var(--border); }
+table.ng-table tr:last-child { border-bottom: none; }
+table.ng-table tr:hover .ng-label,
+table.ng-table tr:hover .ng-val,
+table.ng-table tr:hover .ng-pct,
+table.ng-table tr:hover .ng-qval { background: var(--surface-2); }
+.ng-total-row .ng-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text-muted); }
+.ng-total-row .ng-val { font-weight: 700; }
+.ng-total-row td { background: var(--surface-2); border-top: 2px solid var(--border); }
+.net-col   { color: var(--blue); }
+.inv-col   { color: var(--amber); }
+.gross-col { color: var(--text-primary); }
+
 </style>
 </head>
 <body>
@@ -213,6 +254,224 @@ table.deal-table th { background: #eeecea; padding: 6px 14px; text-align: left; 
     </select>
     <div class="spacer"></div>
     <span class="result-count" id="result-count">33 APs · 540 deals</span>
+  </div>
+
+  <div class="section-label">Net vs Gross Pipeline (Open Deals)</div>
+
+  <div class="ng-explainer">
+    <span><strong>Net</strong> = bookable revenue (Amount converted)</span>
+    <span class="ng-sep">·</span>
+    <span><strong>Investment</strong> = SWE / non-bookable portion (Investment Amount)</span>
+    <span class="ng-sep">·</span>
+    <span><strong>Gross</strong> = Net + Investment</span>
+    <span class="ng-sep">·</span>
+    <span><strong>Inv%</strong> = Investment as % of Gross</span>
+  </div>
+
+  <div class="table-card">
+    <div class="ng-section-header">By Quarter</div>
+    <div class="table-wrap">
+      <table class="ng-table">
+        <thead><tr>
+          <th class="ng-th">Quarter</th>
+          <th class="ng-th ng-th-r">Net</th>
+          <th class="ng-th ng-th-r">Investment</th>
+          <th class="ng-th ng-th-r">Gross</th>
+          <th class="ng-th ng-th-r">Inv%</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td class="ng-label">Q2 FY27</td>
+          <td class="ng-val net-col">$10.6M</td>
+          <td class="ng-val inv-col">$11.9M</td>
+          <td class="ng-val gross-col">$22.5M</td>
+          <td class="ng-pct">53%</td>
+        </tr>        <tr>
+          <td class="ng-label">Q3 FY27</td>
+          <td class="ng-val net-col">$119.7M</td>
+          <td class="ng-val inv-col">$28.9M</td>
+          <td class="ng-val gross-col">$148.5M</td>
+          <td class="ng-pct">19%</td>
+        </tr>        <tr>
+          <td class="ng-label">Q4 FY27</td>
+          <td class="ng-val net-col">$332.7M</td>
+          <td class="ng-val inv-col">$3.0M</td>
+          <td class="ng-val gross-col">$335.7M</td>
+          <td class="ng-pct">1%</td>
+        </tr>
+          <tr class="ng-total-row">
+            <td class="ng-label">Total</td>
+            <td class="ng-val net-col">$463.0M</td>
+            <td class="ng-val inv-col">$43.8M</td>
+            <td class="ng-val gross-col">$506.8M</td>
+            <td class="ng-pct">9%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="ng-section-header">By Account Partner <span class="ng-sub">open pipeline only · sorted by Gross descending</span></div>
+    <div class="table-wrap">
+      <table class="ng-table">
+        <thead><tr>
+          <th class="ng-th">Account Partner</th>
+          <th class="ng-th ng-th-r">Net</th>
+          <th class="ng-th ng-th-r">Investment</th>
+          <th class="ng-th ng-th-r">Gross</th>
+          <th class="ng-th ng-th-r">Inv%</th>
+          <th class="ng-th ng-th-r">Q1</th>
+          <th class="ng-th ng-th-r">Q2</th>
+          <th class="ng-th ng-th-r">Q3</th>
+          <th class="ng-th ng-th-r">Q4</th>
+        </tr></thead>
+        <tbody>
+        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Tammy Kasdorf</td>
+          <td class="ng-val net-col">$56.7M</td>
+          <td class="ng-val inv-col">$7.4M</td>
+          <td class="ng-val gross-col">$64.0M</td>
+          <td class="ng-pct">12%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net $573K + Inv $5.0M">$5.5M</td><td class="ng-qval" title="Q3: Net $33.3M + Inv —">$33.3M</td><td class="ng-qval" title="Q4: Net $22.8M + Inv $2.4M">$25.2M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">John-Michael Knowles</td>
+          <td class="ng-val net-col">$55.2M</td>
+          <td class="ng-val inv-col">$3.9M</td>
+          <td class="ng-val gross-col">$59.1M</td>
+          <td class="ng-pct">7%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net $4.0M + Inv $3.9M">$7.9M</td><td class="ng-qval" title="Q3: Net $5.2M + Inv —">$5.2M</td><td class="ng-qval" title="Q4: Net $46.1M + Inv —">$46.1M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Jonathan Gralla</td>
+          <td class="ng-val net-col">$52.3M</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$52.3M</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $4.4M + Inv —">$4.4M</td><td class="ng-qval" title="Q4: Net $47.9M + Inv —">$47.9M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Jason Buck</td>
+          <td class="ng-val net-col">$34.9M</td>
+          <td class="ng-val inv-col">$15.0M</td>
+          <td class="ng-val gross-col">$49.9M</td>
+          <td class="ng-pct">30%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $15.1M + Inv $15.0M">$30.1M</td><td class="ng-qval" title="Q4: Net $19.8M + Inv —">$19.8M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Erika Schiller</td>
+          <td class="ng-val net-col">$48.4M</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$48.4M</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $5.8M + Inv —">$5.8M</td><td class="ng-qval" title="Q4: Net $42.5M + Inv —">$42.5M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Alex Lee</td>
+          <td class="ng-val net-col">$37.6M</td>
+          <td class="ng-val inv-col">$5.0M</td>
+          <td class="ng-val gross-col">$42.6M</td>
+          <td class="ng-pct">12%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net — + Inv $2.0M">$2.0M</td><td class="ng-qval" title="Q3: Net $2.6M + Inv $3.0M">$5.6M</td><td class="ng-qval" title="Q4: Net $34.9M + Inv —">$34.9M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Isabel Napper</td>
+          <td class="ng-val net-col">$29.2M</td>
+          <td class="ng-val inv-col">$7.0M</td>
+          <td class="ng-val gross-col">$36.2M</td>
+          <td class="ng-pct">19%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $5.1M + Inv $7.0M">$12.1M</td><td class="ng-qval" title="Q4: Net $24.0M + Inv —">$24.0M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Joseph Carpenter</td>
+          <td class="ng-val net-col">$29.1M</td>
+          <td class="ng-val inv-col">$1.6M</td>
+          <td class="ng-val gross-col">$30.7M</td>
+          <td class="ng-pct">5%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net — + Inv $1.0M">$1.0M</td><td class="ng-qval" title="Q3: Net $7.5M + Inv $613K">$8.2M</td><td class="ng-qval" title="Q4: Net $21.5M + Inv —">$21.5M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Sarah Van Leeuwen</td>
+          <td class="ng-val net-col">$30.1M</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$30.1M</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net $2.2M + Inv —">$2.2M</td><td class="ng-qval" title="Q3: Net $4.8M + Inv —">$4.8M</td><td class="ng-qval" title="Q4: Net $23.2M + Inv —">$23.2M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Brent Winterton</td>
+          <td class="ng-val net-col">$29.0M</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$29.0M</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $11.2M + Inv —">$11.2M</td><td class="ng-qval" title="Q4: Net $17.8M + Inv —">$17.8M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Shelby Seip</td>
+          <td class="ng-val net-col">$20.9M</td>
+          <td class="ng-val inv-col">$1.0M</td>
+          <td class="ng-val gross-col">$21.9M</td>
+          <td class="ng-pct">5%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net $3.0M + Inv —">$3.0M</td><td class="ng-qval" title="Q3: Net $8.2M + Inv $1.0M">$9.2M</td><td class="ng-qval" title="Q4: Net $9.8M + Inv —">$9.8M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Michael Buckley</td>
+          <td class="ng-val net-col">$14.7M</td>
+          <td class="ng-val inv-col">$1.2M</td>
+          <td class="ng-val gross-col">$16.0M</td>
+          <td class="ng-pct">8%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $5.0M + Inv $632K">$5.6M</td><td class="ng-qval" title="Q4: Net $9.7M + Inv $611K">$10.4M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Stacia Butwin</td>
+          <td class="ng-val net-col">$11.9M</td>
+          <td class="ng-val inv-col">$733K</td>
+          <td class="ng-val gross-col">$12.6M</td>
+          <td class="ng-pct">6%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval" title="Q2: Net $970K + Inv —">$970K</td><td class="ng-qval" title="Q3: Net $6.9M + Inv $733K">$7.6M</td><td class="ng-qval" title="Q4: Net $4.0M + Inv —">$4.0M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Bob Stilwell</td>
+          <td class="ng-val net-col">$6.7M</td>
+          <td class="ng-val inv-col">$850K</td>
+          <td class="ng-val gross-col">$7.5M</td>
+          <td class="ng-pct">11%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $3.7M + Inv $850K">$4.6M</td><td class="ng-qval" title="Q4: Net $2.9M + Inv —">$2.9M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Catherine Sloan</td>
+          <td class="ng-val net-col">$5.5M</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$5.5M</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q4: Net $5.5M + Inv —">$5.5M</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Andrea Junco</td>
+          <td class="ng-val net-col">$626K</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$626K</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $626K + Inv —">$626K</td><td class="ng-qval empty">—</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Farral Hughes</td>
+          <td class="ng-val net-col">$266K</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$266K</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $183K + Inv —">$183K</td><td class="ng-qval" title="Q4: Net $83K + Inv —">$83K</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Paulina Braun</td>
+          <td class="ng-val net-col">$74K</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$74K</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $74K + Inv —">$74K</td><td class="ng-qval empty">—</td>
+        </tr>        <tr class="ng-ap-row">
+          <td class="ng-label ap-col">Erin Sherrell</td>
+          <td class="ng-val net-col">$5</td>
+          <td class="ng-val inv-col">—</td>
+          <td class="ng-val gross-col">$5</td>
+          <td class="ng-pct">0%</td>
+          <td class="ng-qval empty">—</td><td class="ng-qval empty">—</td><td class="ng-qval" title="Q3: Net $5 + Inv —">$5</td><td class="ng-qval empty">—</td>
+        </tr>
+          <tr class="ng-total-row">
+            <td class="ng-label">Total</td>
+            <td class="ng-val net-col">$463.0M</td>
+            <td class="ng-val inv-col">$43.8M</td>
+            <td class="ng-val gross-col">$506.8M</td>
+            <td class="ng-pct">9%</td>
+            <td class="ng-qval gross-col">—</td><td class="ng-qval gross-col">$22.5M</td><td class="ng-qval gross-col">$148.5M</td><td class="ng-qval gross-col">$335.7M</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="section-label">By Account Partner</div>
