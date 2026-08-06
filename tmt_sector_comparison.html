@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AMERS AP Sector Comparison FY27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 12px; background: #f0f4f8; color: #1a1a2e; }
+.header { padding: 20px 24px 8px; }
+h1 { font-size: 20px; color: #032D60; margin-bottom: 4px; }
+.subtitle { color: #555; font-size: 12px; margin-bottom: 18px; }
+
+/* Summary cards */
+.cards { display: flex; gap: 12px; padding: 0 24px 22px; flex-wrap: wrap; }
+.scard { background: white; border-radius: 8px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,.1); flex: 1; min-width: 180px; border-top: 3px solid #ccc; }
+.tmt-card { border-top-color: #0070d2; box-shadow: 0 2px 10px rgba(0,112,210,.2); }
+.scard-name { font-weight: 700; font-size: 12px; color: #032D60; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.scard-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; margin-bottom: 10px; }
+.scard-stat .scard-val { font-size: 13px; font-weight: 700; color: #032D60; }
+.scard-stat .scard-lbl { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: .4px; margin-top: 1px; }
+.share-lbl { font-size: 9px; color: #aaa; margin-bottom: 3px; text-transform: uppercase; letter-spacing: .4px; }
+.share-bar-wrap { background: #e8ecf2; border-radius: 3px; height: 6px; width: 100%; margin-bottom: 3px; }
+.share-bar { height: 6px; border-radius: 3px; }
+.share-val { font-size: 10px; color: #666; }
+
+/* Dot */
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+/* Table */
+.wrapper { padding: 0 16px 40px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 1px 6px rgba(0,0,0,.1); border-radius: 8px; overflow: hidden; min-width: 1060px; }
+thead tr.qhdr { background: #032D60; color: white; }
+thead tr.qhdr th { padding: 8px 10px; font-size: 10px; font-weight: 600; letter-spacing: .5px; text-align: center; white-space: nowrap; }
+thead tr.qhdr th.q2hdr { background: #0b4f8a; }
+thead tr.qhdr th.q3hdr { background: #0070d2; }
+thead tr.qhdr th.tothdr { background: #00396b; }
+thead tr.qhdr th.effhdr { background: #1b5e20; }
+thead tr.qhdr th.namehdr { text-align: left; }
+thead tr.fhdr { background: #1a3a5c; color: #cde; }
+thead tr.fhdr th { padding: 7px 10px; font-size: 10px; font-weight: 500; letter-spacing: .3px; white-space: nowrap; }
+thead tr.fhdr th.pipegen { color: #88ccff; }
+thead tr.fhdr th.open { color: #aaddff; }
+thead tr.fhdr th.eff { color: #a8d5a2; }
+td { padding: 8px 10px; vertical-align: middle; border-bottom: 1px solid #eef0f3; }
+tr.tmt-row td { background: #f0f7ff !important; }
+tr.tmt-row td.name { border-left: 3px solid #0070d2; }
+tr.total-row td { background: #032D60 !important; color: white; font-weight: 700; border-top: 2px solid #0070d2; }
+tr.total-row td.money, tr.total-row td.pct, tr.total-row td.num { color: #cce5ff; }
+tr.data-row:not(.tmt-row):not(.total-row):hover td { background: #f8fafc; }
+td.name { font-weight: 600; color: #032D60; width: 150px; border-right: 2px solid #dde3ed; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+tr.total-row td.name { color: white; }
+td.money { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; width: 95px; }
+td.num { text-align: center; width: 45px; color: #555; }
+td.money .zero { color: #ccc; }
+td.pipegen { background: #f5faff; }
+td.open { background: #edf5ff; }
+td.tot-book { background: #f8f5ff; font-weight: 600; }
+td.tot-pipe { background: #eef3ff; font-weight: 700; color: #032D60; width: 120px; }
+tr.total-row td.tot-pipe { color: #88ccff; }
+td.pct { text-align: center; width: 65px; font-weight: 600; border-left: 1px solid #dde3ed; }
+td.pct.hi { color: #1b7a3e; }
+td.pct.lo { color: #c23934; }
+tr.total-row td.pct { color: #a0d8b0; }
+.bar-cell { margin-top: 4px; }
+.hbar { border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>AMERS — AP Sector Comparison FY27</h1>
+  <p class="subtitle">Bookings &amp; pipeline generation by sector &nbsp;·&nbsp; FY27 Q1–Q3 &nbsp;·&nbsp; as of 2026-08-06</p>
+</div>
+
+<div class="cards">
+<div class="scard tmt-card">
+  <div class="scard-name"><span class="dot" style="background:#0070d2"></span>AMER TMT/CBS</div>
+  <div class="scard-stats">
+    <div class="scard-stat"><div class="scard-val">16</div><div class="scard-lbl">APs</div></div>
+    <div class="scard-stat"><div class="scard-val">$346,611,191</div><div class="scard-lbl">FY27 Pipegen</div></div>
+    <div class="scard-stat"><div class="scard-val">$57,604,912</div><div class="scard-lbl">FY27 Bookings</div></div>
+    <div class="scard-stat"><div class="scard-val">$120,004,007</div><div class="scard-lbl">Q3 Open Pipe</div></div>
+    <div class="scard-stat"><div class="scard-val">$21,663,199</div><div class="scard-lbl">Pipegen / AP</div></div>
+    <div class="scard-stat"><div class="scard-val">16.6%</div><div class="scard-lbl">Book / Pipe %</div></div>
+  </div>
+  <div class="scard-share">
+    <div class="share-lbl">Share of total pipegen</div>
+    <div class="share-bar-wrap"><div class="share-bar" style="width:17.1%;background:#0070d2"></div></div>
+    <div class="share-val">17.1%</div>
+  </div>
+</div>
+<div class="scard ">
+  <div class="scard-name"><span class="dot" style="background:#00a1e0"></span>AMER PACE</div>
+  <div class="scard-stats">
+    <div class="scard-stat"><div class="scard-val">21</div><div class="scard-lbl">APs</div></div>
+    <div class="scard-stat"><div class="scard-val">$416,028,289</div><div class="scard-lbl">FY27 Pipegen</div></div>
+    <div class="scard-stat"><div class="scard-val">$43,839,047</div><div class="scard-lbl">FY27 Bookings</div></div>
+    <div class="scard-stat"><div class="scard-val">$96,801,126</div><div class="scard-lbl">Q3 Open Pipe</div></div>
+    <div class="scard-stat"><div class="scard-val">$19,810,871</div><div class="scard-lbl">Pipegen / AP</div></div>
+    <div class="scard-stat"><div class="scard-val">10.5%</div><div class="scard-lbl">Book / Pipe %</div></div>
+  </div>
+  <div class="scard-share">
+    <div class="share-lbl">Share of total pipegen</div>
+    <div class="share-bar-wrap"><div class="share-bar" style="width:20.5%;background:#00a1e0"></div></div>
+    <div class="share-val">20.5%</div>
+  </div>
+</div>
+<div class="scard ">
+  <div class="scard-name"><span class="dot" style="background:#1b7a3e"></span>AMER REG</div>
+  <div class="scard-stats">
+    <div class="scard-stat"><div class="scard-val">28</div><div class="scard-lbl">APs</div></div>
+    <div class="scard-stat"><div class="scard-val">$531,269,001</div><div class="scard-lbl">FY27 Pipegen</div></div>
+    <div class="scard-stat"><div class="scard-val">$91,016,304</div><div class="scard-lbl">FY27 Bookings</div></div>
+    <div class="scard-stat"><div class="scard-val">$179,146,740</div><div class="scard-lbl">Q3 Open Pipe</div></div>
+    <div class="scard-stat"><div class="scard-val">$18,973,893</div><div class="scard-lbl">Pipegen / AP</div></div>
+    <div class="scard-stat"><div class="scard-val">17.1%</div><div class="scard-lbl">Book / Pipe %</div></div>
+  </div>
+  <div class="scard-share">
+    <div class="share-lbl">Share of total pipegen</div>
+    <div class="share-bar-wrap"><div class="share-bar" style="width:26.1%;background:#1b7a3e"></div></div>
+    <div class="share-val">26.1%</div>
+  </div>
+</div>
+<div class="scard ">
+  <div class="scard-name"><span class="dot" style="background:#6b3fa0"></span>AMER Pub Sec</div>
+  <div class="scard-stats">
+    <div class="scard-stat"><div class="scard-val">25</div><div class="scard-lbl">APs</div></div>
+    <div class="scard-stat"><div class="scard-val">$573,861,064</div><div class="scard-lbl">FY27 Pipegen</div></div>
+    <div class="scard-stat"><div class="scard-val">$161,057,674</div><div class="scard-lbl">FY27 Bookings</div></div>
+    <div class="scard-stat"><div class="scard-val">$225,449,202</div><div class="scard-lbl">Q3 Open Pipe</div></div>
+    <div class="scard-stat"><div class="scard-val">$22,954,443</div><div class="scard-lbl">Pipegen / AP</div></div>
+    <div class="scard-stat"><div class="scard-val">28.1%</div><div class="scard-lbl">Book / Pipe %</div></div>
+  </div>
+  <div class="scard-share">
+    <div class="share-lbl">Share of total pipegen</div>
+    <div class="share-bar-wrap"><div class="share-bar" style="width:28.2%;background:#6b3fa0"></div></div>
+    <div class="share-val">28.2%</div>
+  </div>
+</div>
+<div class="scard ">
+  <div class="scard-name"><span class="dot" style="background:#c23934"></span>LATAM</div>
+  <div class="scard-stats">
+    <div class="scard-stat"><div class="scard-val">18</div><div class="scard-lbl">APs</div></div>
+    <div class="scard-stat"><div class="scard-val">$164,109,211</div><div class="scard-lbl">FY27 Pipegen</div></div>
+    <div class="scard-stat"><div class="scard-val">$38,708,599</div><div class="scard-lbl">FY27 Bookings</div></div>
+    <div class="scard-stat"><div class="scard-val">$58,565,303</div><div class="scard-lbl">Q3 Open Pipe</div></div>
+    <div class="scard-stat"><div class="scard-val">$9,117,178</div><div class="scard-lbl">Pipegen / AP</div></div>
+    <div class="scard-stat"><div class="scard-val">23.6%</div><div class="scard-lbl">Book / Pipe %</div></div>
+  </div>
+  <div class="scard-share">
+    <div class="share-lbl">Share of total pipegen</div>
+    <div class="share-bar-wrap"><div class="share-bar" style="width:8.1%;background:#c23934"></div></div>
+    <div class="share-val">8.1%</div>
+  </div>
+</div>
+</div>
+
+<div class="wrapper">
+<table>
+<thead>
+<tr class="qhdr">
+  <th class="namehdr" rowspan="2">Sector</th>
+  <th rowspan="2" style="text-align:center">APs</th>
+  <th colspan="2">Q1</th>
+  <th class="q2hdr" colspan="2">Q2</th>
+  <th class="q3hdr" colspan="3">Q3</th>
+  <th class="tothdr" colspan="2">Grand Total</th>
+  <th class="effhdr" colspan="3">Efficiency</th>
+</tr>
+<tr class="fhdr">
+  <th>Bookings</th><th class="pipegen">Pipegen</th>
+  <th>Bookings</th><th class="pipegen">Pipegen</th>
+  <th>Bookings</th><th class="open">Open Pipe</th><th class="pipegen">Pipegen</th>
+  <th>Bookings</th><th class="pipegen">Pipegen</th>
+  <th class="eff">Book / AP</th><th class="eff">Pipe / AP</th><th class="eff">Book %</th>
+</tr>
+</thead>
+<tbody>
+<tr class="data-row tmt-row">
+  <td class="name"><span class="dot" style="background:#0070d2"></span>AMER TMT/CBS</td>
+  <td class="num">16</td>
+  <td class="money">$15,585,724</td>
+  <td class="money pipegen">$192,717,935</td>
+  <td class="money">$38,005,826</td>
+  <td class="money pipegen">$147,794,997</td>
+  <td class="money">$4,013,362</td>
+  <td class="money open">$120,004,007</td>
+  <td class="money pipegen">$6,098,259</td>
+  <td class="money tot-book">$57,604,912</td>
+  <td class="money tot-pipe">$346,611,191
+    <div class="bar-cell"><div class="hbar" style="width:60.4%;background:#0070d2;height:20px"></div></div>
+  </td>
+  <td class="money">$3,600,307</td>
+  <td class="money">$21,663,199
+    <div class="bar-cell"><div class="hbar" style="width:94.4%;background:#0070d2;height:20px"></div></div>
+  </td>
+  <td class="pct lo">16.6%</td>
+</tr>
+<tr class="data-row ">
+  <td class="name"><span class="dot" style="background:#00a1e0"></span>AMER PACE</td>
+  <td class="num">21</td>
+  <td class="money">$9,327,767</td>
+  <td class="money pipegen">$256,929,286</td>
+  <td class="money">$34,511,280</td>
+  <td class="money pipegen">$139,541,339</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$96,801,126</td>
+  <td class="money pipegen">$19,557,664</td>
+  <td class="money tot-book">$43,839,047</td>
+  <td class="money tot-pipe">$416,028,289
+    <div class="bar-cell"><div class="hbar" style="width:72.5%;background:#00a1e0;height:20px"></div></div>
+  </td>
+  <td class="money">$2,087,574</td>
+  <td class="money">$19,810,871
+    <div class="bar-cell"><div class="hbar" style="width:86.3%;background:#00a1e0;height:20px"></div></div>
+  </td>
+  <td class="pct lo">10.5%</td>
+</tr>
+<tr class="data-row ">
+  <td class="name"><span class="dot" style="background:#1b7a3e"></span>AMER REG</td>
+  <td class="num">28</td>
+  <td class="money">$20,624,810</td>
+  <td class="money pipegen">$265,306,223</td>
+  <td class="money">$68,008,006</td>
+  <td class="money pipegen">$256,966,210</td>
+  <td class="money">$2,383,488</td>
+  <td class="money open">$179,146,740</td>
+  <td class="money pipegen">$8,996,568</td>
+  <td class="money tot-book">$91,016,304</td>
+  <td class="money tot-pipe">$531,269,001
+    <div class="bar-cell"><div class="hbar" style="width:92.6%;background:#1b7a3e;height:20px"></div></div>
+  </td>
+  <td class="money">$3,250,582</td>
+  <td class="money">$18,973,893
+    <div class="bar-cell"><div class="hbar" style="width:82.7%;background:#1b7a3e;height:20px"></div></div>
+  </td>
+  <td class="pct lo">17.1%</td>
+</tr>
+<tr class="data-row ">
+  <td class="name"><span class="dot" style="background:#6b3fa0"></span>AMER Pub Sec</td>
+  <td class="num">25</td>
+  <td class="money">$100,009,976</td>
+  <td class="money pipegen">$299,886,251</td>
+  <td class="money">$61,047,698</td>
+  <td class="money pipegen">$269,839,903</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$225,449,202</td>
+  <td class="money pipegen">$4,134,910</td>
+  <td class="money tot-book">$161,057,674</td>
+  <td class="money tot-pipe">$573,861,064
+    <div class="bar-cell"><div class="hbar" style="width:100.0%;background:#6b3fa0;height:20px"></div></div>
+  </td>
+  <td class="money">$6,442,307</td>
+  <td class="money">$22,954,443
+    <div class="bar-cell"><div class="hbar" style="width:100.0%;background:#6b3fa0;height:20px"></div></div>
+  </td>
+  <td class="pct hi">28.1%</td>
+</tr>
+<tr class="data-row ">
+  <td class="name"><span class="dot" style="background:#c23934"></span>LATAM</td>
+  <td class="num">18</td>
+  <td class="money">$6,611,708</td>
+  <td class="money pipegen">$87,859,774</td>
+  <td class="money">$31,160,531</td>
+  <td class="money pipegen">$74,728,031</td>
+  <td class="money">$936,360</td>
+  <td class="money open">$58,565,303</td>
+  <td class="money pipegen">$1,521,406</td>
+  <td class="money tot-book">$38,708,599</td>
+  <td class="money tot-pipe">$164,109,211
+    <div class="bar-cell"><div class="hbar" style="width:28.6%;background:#c23934;height:20px"></div></div>
+  </td>
+  <td class="money">$2,150,478</td>
+  <td class="money">$9,117,178
+    <div class="bar-cell"><div class="hbar" style="width:39.7%;background:#c23934;height:20px"></div></div>
+  </td>
+  <td class="pct hi">23.6%</td>
+</tr>
+<tr class="data-row total-row">
+  <td class="name"><span class="dot" style="background:#444"></span>All Sectors</td>
+  <td class="num">108</td>
+  <td class="money">$152,159,985</td>
+  <td class="money pipegen">$1,102,699,469</td>
+  <td class="money">$232,733,341</td>
+  <td class="money pipegen">$888,870,480</td>
+  <td class="money">$7,333,210</td>
+  <td class="money open">$679,966,378</td>
+  <td class="money pipegen">$40,308,807</td>
+  <td class="money tot-book">$392,226,536</td>
+  <td class="money tot-pipe">$2,031,878,756
+    <div class="bar-cell"></div>
+  </td>
+  <td class="money">$3,631,727</td>
+  <td class="money">$18,813,692
+    <div class="bar-cell"></div>
+  </td>
+  <td class="pct hi">19.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AMER TMT/CBS — AP PipeGen FY27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 12px; background: #f0f4f8; color: #1a1a2e; }
+.header { padding: 20px 24px 0; }
+h1 { font-size: 20px; color: #032D60; margin-bottom: 4px; }
+.subtitle { color: #555; font-size: 12px; margin-bottom: 14px; }
+.stats { display: flex; gap: 12px; padding: 0 24px 18px; flex-wrap: wrap; }
+.stat { background: white; border-radius: 6px; padding: 10px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.1); min-width: 140px; }
+.stat .val { font-size: 22px; font-weight: 700; color: #032D60; }
+.stat .lbl { font-size: 10px; color: #666; margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+.stat .sub { font-size: 10px; color: #aaa; margin-top: 1px; }
+.wrapper { padding: 0 16px 40px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 1px 6px rgba(0,0,0,.1); border-radius: 8px; overflow: hidden; min-width: 900px; }
+thead tr.qhdr { background: #032D60; color: white; }
+thead tr.qhdr th { padding: 8px 10px; font-size: 10px; font-weight: 600; letter-spacing: .5px; text-align: center; }
+thead tr.qhdr th.q2hdr { background: #0b4f8a; }
+thead tr.qhdr th.q3hdr { background: #0070d2; }
+thead tr.qhdr th.tothdr { background: #00396b; }
+thead tr.qhdr th.namehdr { text-align: left; }
+thead tr.fhdr { background: #1a3a5c; color: #cde; }
+thead tr.fhdr th { padding: 7px 10px; font-size: 10px; font-weight: 500; letter-spacing: .3px; white-space: nowrap; }
+thead tr.fhdr th.pipegen { color: #88ccff; }
+thead tr.fhdr th.open { color: #aaddff; }
+td { padding: 7px 10px; vertical-align: middle; border-bottom: 1px solid #eef0f3; }
+tr.data-row:hover td { background: #f5f9ff; }
+tr.total-row td { background: #032D60; color: white; font-weight: 700; border-top: 2px solid #0070d2; }
+tr.total-row td.money { color: #cce5ff; }
+td.name { font-weight: 600; color: #032D60; width: 160px; border-right: 2px solid #dde3ed; white-space: nowrap; }
+td.name .rank { font-size: 10px; font-weight: 400; color: #aaa; display: inline; margin-left: 6px; }
+tr.total-row td.name { color: white; }
+td.money { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; width: 100px; }
+td.money .zero { color: #ccc; font-style: normal; }
+td.pipegen { background: #f0f7ff; }
+td.open { background: #e8f4ff; }
+td.tot-book { background: #f5f0ff; font-weight: 600; }
+td.tot-pipe { background: #e8f0ff; font-weight: 700; color: #032D60; width: 130px; }
+tr.total-row td.tot-pipe { color: #88ccff; }
+.bar-cell { margin-top: 4px; }
+.bar-wrap { background: #dde8f5; border-radius: 2px; height: 4px; width: 100%; }
+.bar { height: 4px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>AMER TMT/CBS — AP PipeGen FY27</h1>
+  <p class="subtitle">Account Partner bookings &amp; pipeline generation &nbsp;·&nbsp; sorted by Grand Total Pipegen descending &nbsp;·&nbsp; as of 2026-08-06</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="val">10</div><div class="lbl">APs</div></div>
+<div class="stat"><div class="val">$26,486,481</div><div class="lbl">FY27 Bookings</div><div class="sub">YTD Q1–Q3</div></div>
+<div class="stat"><div class="val">$205,317,361</div><div class="lbl">FY27 Pipegens</div><div class="sub">YTD Q1–Q3</div></div>
+<div class="stat"><div class="val">$85,181,690</div><div class="lbl">Q3 Open Pipe</div><div class="sub">Live pipeline</div></div>
+<div class="stat"><div class="val">12.9%</div><div class="lbl">Book/Pipe Ratio</div><div class="sub">Bookings ÷ Pipegen</div></div>
+</div>
+<div class="wrapper">
+<table>
+<thead>
+<tr class="qhdr">
+  <th class="namehdr" rowspan="2">Account Partner</th>
+  <th colspan="2">Q1</th>
+  <th class="q2hdr" colspan="2">Q2</th>
+  <th class="q3hdr" colspan="3">Q3</th>
+  <th class="tothdr" colspan="2">Grand Total</th>
+</tr>
+<tr class="fhdr">
+  <th>Bookings</th>
+  <th class="pipegen">Pipegen</th>
+  <th>Bookings</th>
+  <th class="pipegen">Pipegen</th>
+  <th>Bookings</th>
+  <th class="open">Open Pipe</th>
+  <th class="pipegen">Pipegen</th>
+  <th>Bookings</th>
+  <th class="pipegen">Pipegen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="data-row">
+  <td class="name">Tammy Kasdorf<div class="rank">#1</div></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$16,019,305</td>
+  <td class="money">$8,602,176</td>
+  <td class="money pipegen">$16,262,991</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$24,633,696</td>
+  <td class="money pipegen">$572,832</td>
+  <td class="money tot-book">$8,602,176</td>
+  <td class="money tot-pipe">$32,855,128<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:100.0%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Isabel Napper<div class="rank">#2</div></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$23,916,000</td>
+  <td class="money">$2,583,786</td>
+  <td class="money pipegen">$7,123,786</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$5,985,930</td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money tot-book">$2,583,786</td>
+  <td class="money tot-pipe">$31,039,786<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:94.5%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Erika Schiller<div class="rank">#3</div></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$14,891,221</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$12,680,642</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$10,682,900</td>
+  <td class="money pipegen">$2,864,160</td>
+  <td class="money tot-book"><span class="zero">—</span></td>
+  <td class="money tot-pipe">$30,436,023<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:92.6%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">JM Knowles<div class="rank">#4</div></td>
+  <td class="money">$1,419,302</td>
+  <td class="money pipegen">$28,768,996</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$500,000</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$7,704,147</td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money tot-book">$1,419,302</td>
+  <td class="money tot-pipe">$29,268,996<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:89.1%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Joseph Carpenter<div class="rank">#5</div></td>
+  <td class="money">$976,976</td>
+  <td class="money pipegen">$11,528,706</td>
+  <td class="money">$3,709,968</td>
+  <td class="money pipegen">$15,662,485</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$12,299,838</td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money tot-book">$4,686,944</td>
+  <td class="money tot-pipe">$27,191,191<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:82.8%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Jonathan Gralla<div class="rank">#6</div></td>
+  <td class="money">$4,570,021</td>
+  <td class="money pipegen">$4,822,040</td>
+  <td class="money">$493,500</td>
+  <td class="money pipegen">$11,320,746</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$4,808,882</td>
+  <td class="money pipegen">$400,000</td>
+  <td class="money tot-book">$5,063,521</td>
+  <td class="money tot-pipe">$16,542,786<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:50.4%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Sarah Van Leeuwen<div class="rank">#7</div></td>
+  <td class="money">$2,696,352</td>
+  <td class="money pipegen">$8,013,448</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$6,264,160</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$10,508,421</td>
+  <td class="money pipegen">$2,172,832</td>
+  <td class="money tot-book">$2,696,352</td>
+  <td class="money tot-pipe">$16,450,440<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:50.1%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Alex Lee<div class="rank">#8</div></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$4,330,818</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$9,381,332</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$2,645,664</td>
+  <td class="money pipegen">$88,435</td>
+  <td class="money tot-book"><span class="zero">—</span></td>
+  <td class="money tot-pipe">$13,800,585<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:42.0%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Brent Winterton<div class="rank">#9</div></td>
+  <td class="money">$1,434,400</td>
+  <td class="money pipegen">$640,000</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen">$7,092,426</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$5,912,212</td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money tot-book">$1,434,400</td>
+  <td class="money tot-pipe">$7,732,426<div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:23.5%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="data-row">
+  <td class="name">Jason Buck<div class="rank">#10</div></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open"><span class="zero">—</span></td>
+  <td class="money pipegen"><span class="zero">—</span></td>
+  <td class="money tot-book"><span class="zero">—</span></td>
+  <td class="money tot-pipe"><span class="zero">—</span><div class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:0.0%;background:#0070d2"></div></div></div></td>
+</tr>
+<tr class="total-row">
+  <td class="name">Team Total</td>
+  <td class="money">$11,097,051</td>
+  <td class="money pipegen">$112,930,534</td>
+  <td class="money">$15,389,430</td>
+  <td class="money pipegen">$86,288,568</td>
+  <td class="money"><span class="zero">—</span></td>
+  <td class="money open">$85,181,690</td>
+  <td class="money pipegen">$6,098,259</td>
+  <td class="money tot-book">$26,486,481</td>
+  <td class="money tot-pipe">$205,317,361</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body>
+</html>

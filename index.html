@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AMER TMT/CBS Reports FY27</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+.container { max-width: 700px; width: 100%; }
+h1 { font-size: 24px; color: #032D60; margin-bottom: 6px; }
+.sub { color: #666; font-size: 13px; margin-bottom: 32px; }
+.cards { display: flex; flex-direction: column; gap: 14px; }
+.card { background: white; border-radius: 10px; padding: 20px 24px; box-shadow: 0 1px 6px rgba(0,0,0,.1); text-decoration: none; color: inherit; display: flex; align-items: center; gap: 20px; border-left: 4px solid #0070d2; transition: box-shadow .15s, transform .15s; }
+.card:hover { box-shadow: 0 4px 16px rgba(0,112,210,.18); transform: translateY(-1px); }
+.card:nth-child(2) { border-left-color: #00a1e0; }
+.card:nth-child(3) { border-left-color: #1b7a3e; }
+.icon { font-size: 28px; flex-shrink: 0; }
+.card-text h2 { font-size: 15px; color: #032D60; margin-bottom: 4px; }
+.card-text p { font-size: 12px; color: #666; line-height: 1.5; }
+.arrow { margin-left: auto; color: #0070d2; font-size: 18px; flex-shrink: 0; }
+.footer { margin-top: 28px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AMER TMT/CBS Reports</h1>
+  <p class="sub">FY27 &nbsp;·&nbsp; Internal use only</p>
+  <div class="cards">
+    <a class="card" href="tmt_license_services_report.html">
+      <div class="icon">📋</div>
+      <div class="card-text">
+        <h2>License &amp; Services Opportunities</h2>
+        <p>Q3 license pipeline grouped by account with services attach status and Account Partner coverage.</p>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a class="card" href="tmt_ap_pipegen_report.html">
+      <div class="icon">📈</div>
+      <div class="card-text">
+        <h2>AP PipeGen — TMT/CBS</h2>
+        <p>Per-AP bookings and pipeline generation for AMER TMT/CBS across Q1–Q3 FY27.</p>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+    <a class="card" href="tmt_sector_comparison.html">
+      <div class="icon">🔍</div>
+      <div class="card-text">
+        <h2>Sector Comparison</h2>
+        <p>TMT/CBS vs. AMER PACE, REG, Pub Sec, and LATAM — bookings, pipegen, and efficiency metrics.</p>
+      </div>
+      <div class="arrow">›</div>
+    </a>
+  </div>
+  <p class="footer">Auto-rebuilt daily via GitHub Actions &nbsp;·&nbsp; <a href="https://github.com/csloan-netizen/fy27reports" style="color:#aaa">csloan-netizen/fy27reports</a></p>
+</div>
+</body>
+</html>
